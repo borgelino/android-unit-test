@@ -1,7 +1,7 @@
 package com.jcandksolutions.gradle.androidunittest
 
 import com.android.build.gradle.api.BaseVariant
-
+import com.android.builder.core.DefaultBuildType
 import org.gradle.api.internal.DefaultDomainObjectSet
 import org.gradle.api.logging.Logger
 
@@ -39,11 +39,15 @@ public abstract class MainHandler {
     mModelManager.register()
     mConfigurationManager.createNewConfigurations()
 
+    if (!mExtension.testReleaseBuildType) {
+      mExtension.excludeBuildType("release")
+    }
+
     //we use "all" instead of "each" because this set is empty until after project evaluated
     //with "all" it will execute the closure when the variants are getting created
     mVariants.all { BaseVariant variant ->
       owner.mLogger.info("----------------------------------------")
-      if (variant.buildType.debuggable || owner.mExtension.testReleaseBuildType) {
+      if (!isExcludedBuildType(variant.buildType, owner.mExtension)) {
         if (!isVariantInvalid(variant)) {
           VariantWrapper variantWrapper = createVariantWrapper(variant)
           variantWrapper.configureSourceSet()
@@ -51,11 +55,15 @@ public abstract class MainHandler {
           owner.mModelManager.registerArtifact(variantWrapper)
         }
       } else {
-        owner.mLogger.info("skipping non-debuggable variant: ${variant.name}")
+        owner.mLogger.info("skipping excluded variant: ${variant.name}")
       }
     }
     mLogger.info("----------------------------------------")
     mLogger.info("Applied plugin")
+  }
+
+  protected boolean isExcludedBuildType(DefaultBuildType buildType, AndroidUnitTestPluginExtension extension) {
+    return extension.excludedBuildTypes.contains(buildType.name)
   }
 
   /**

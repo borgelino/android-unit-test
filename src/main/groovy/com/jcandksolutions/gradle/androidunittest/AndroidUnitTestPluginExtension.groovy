@@ -5,10 +5,15 @@ package com.jcandksolutions.gradle.androidunittest
  */
 public class AndroidUnitTestPluginExtension {
   private boolean mTestReleaseBuildType
+  private List<String> mExcludedBuildTypes
   private boolean mDownloadTestDependenciesSources
   private boolean mDownloadTestDependenciesJavadoc
   private boolean mDownloadDependenciesJavadoc
   private boolean mDownloadDependenciesSources
+
+  public AndroidUnitTestPluginExtension() {
+    mExcludedBuildTypes = new ArrayList<String>()
+  }
   /**
    * Retrieves the TestReleaseBuildType property which enables testing if release build types. Only
    * works on App projects, not library projects.
@@ -25,6 +30,30 @@ public class AndroidUnitTestPluginExtension {
    */
   public void setTestReleaseBuildType(boolean value) {
     mTestReleaseBuildType = value;
+  }
+
+  /**
+   * Retrieves a list of excluded build types in its string representation.
+   * @return A list of Strings representing build types.
+   */
+  public List<String> getExcludedBuildTypes() {
+    return mExcludedBuildTypes
+  }
+
+  /**
+   * Exclude a build type from test task generation.
+   * @param buildType The String representation of the build type to exclude.
+   */
+  public void excludeBuildType(String buildType) {
+    mExcludedBuildTypes.add(buildType)
+  }
+
+  /**
+   * Exclude a list of build types from test task generation.
+   * @param buildType A list of String representations of the build types to exclude.
+   */
+  public void excludeBuildTypes(List<String> buildTypes) {
+    mExcludedBuildTypes.addAll(buildTypes)
   }
 
   /**

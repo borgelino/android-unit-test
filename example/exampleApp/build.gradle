@@ -5,7 +5,7 @@ buildscript {
       mavenLocal()
     }
 
-    classpath 'com.android.tools.build:gradle:0.12.+'
+    classpath 'com.android.tools.build:gradle:0.13.2'
     classpath 'com.github.jcandksolutions.gradle:android-unit-test:2.0.0-SNAPSHOT'
   }
 }
@@ -19,6 +19,9 @@ android {
   buildTypes {
     debug {
       applicationIdSuffix ".debug"
+    }
+    staging {
+      debuggable true
     }
   }
 
@@ -56,11 +59,12 @@ android {
 apply plugin: 'android-unit-test'
 
 androidUnitTest {
-  testReleaseBuildType true
+  testReleaseBuildType false
   downloadDependenciesSources true
   downloadDependenciesJavadoc true
   downloadTestDependenciesSources true
   downloadTestDependenciesJavadoc true
+  excludeBuildType "staging"
 }
 
 dependencies {

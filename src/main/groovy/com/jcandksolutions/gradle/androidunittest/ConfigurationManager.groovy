@@ -145,9 +145,11 @@ public class ConfigurationManager {
   private List<String> getBuildTypeConfigList() {
     List<String> buildTypeConfigNames = []
     mAndroidExtension.buildTypes.each { DefaultBuildType buildType ->
-      String configName = "${buildType.name}Compile"
-      mLogger.info(configName)
-      buildTypeConfigNames.add(configName)
+      if (!mPluginExtension.excludedBuildTypes.contains(buildType.name)) {
+        String configName = "${buildType.name}Compile"
+        mLogger.info(configName)
+        buildTypeConfigNames.add(configName)
+      }
     }
     return buildTypeConfigNames
   }
