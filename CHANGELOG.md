@@ -88,3 +88,21 @@ Version 1.6.2
 2014-10-02
 
 - Fix resources not being copied because of wrong order of task dependencies on a clean test.
+
+Version 1.6.3
+-----------------------------
+2014-10-17
+
+- Add check to not include a dependency more than once to download sources or javadoc.
+
+Version 2.0.0
+-----------------------------
+2014-11-03
+
+- Update to Gradle 2.1, Android plugin 0.14.0, build tools 21.1.0, android API 21 and coveralls plugin 2.0.0.
+
+Version 2.0.1
+-----------------------------
+2014-11-04
+
+- Fix Unsupported major.minor version 52.0 exception for Java 7.

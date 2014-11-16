@@ -4,7 +4,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2'
+    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
   }
 }
 
@@ -15,7 +15,7 @@ apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 
 group = 'com.github.jcandksolutions.gradle'
-version = '2.0.0-SNAPSHOT'
+version = '2.0.2-SNAPSHOT'
 ext.userName = null
 ext.passWord = null
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
@@ -28,6 +28,9 @@ if (hasProperty('sonatypePassword')) {
   passWord = sonatypePassword
 }
 
+sourceCompatibility = JavaVersion.VERSION_1_6
+targetCompatibility = JavaVersion.VERSION_1_6
+
 dependencies {
   repositories {
     mavenCentral()
@@ -35,7 +38,7 @@ dependencies {
 
   compile gradleApi()
   compile localGroovy()
-  compile 'com.android.tools.build:gradle:0.12.2'
+  compile 'com.android.tools.build:gradle:0.14.0'
 
   testCompile 'junit:junit:4.10'
   testCompile 'org.easytesting:fest-assert-core:2.0M10'
